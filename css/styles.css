@@ -4,7 +4,7 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     width : 95%;
-    height: 95vh;
+    height: 100vh;
     border: 0;
     margin: 0;
     box-sizing: border-box;
@@ -13,4 +13,8 @@ body{
 
 #search{
     background-color: red;
+}
+
+#search_label{
+    display: none;
 }
