@@ -17,7 +17,7 @@ body{
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-top: 8em;
+    margin-top: 7em;
     color: aliceblue;
 }
 
@@ -27,20 +27,9 @@ body{
     justify-content: center;
     align-items: center;
     height: 20vh;
-    width: 100%;    
-}
-
-
-.after_search form{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
     width: 100%;
-    background-color: red;
-    padding: 400em;
-
 }
+
 #loading{
     display: none;
     justify-content: center;
@@ -52,13 +41,21 @@ body{
 
 
 #search_text{
-    border-radius: 5px; 
+    border-radius: 5px;
+    border:none ; 
     border: 0;
     padding: 10px;
     width: 70%;
     height: 1em;
     text-align: center;
     background-color: rgb(134, 132, 132);
+    color: aliceblue;
+
+
+}
+
+*:focus {
+    outline: none;
 }
 
 #search_label{
