@@ -1,10 +1,11 @@
 body{
-    background-image: url("../imgs/space-background.png");
+    background-image: url("../imgs/newSpace.jpg");
+    background-color: #040407;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     width : 95%;
-    height: 100vh;
+    height: 90vh;
     border: 0;
     margin: 0;
     box-sizing: border-box;
@@ -12,9 +13,57 @@ body{
 }
 
 #search{
-    background-color: red;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    width: 100%;    
+}
+
+#search_text{
+    border-radius: 5px; 
+    border: 0;
+    padding: 10px;
+    width: 70%;
+    height: 1em;
+    text-align: center;
+    background-color: rgb(134, 132, 132);
 }
 
 #search_label{
     display: none;
+}
+
+::placeholder {
+   color:    rgb(220, 220, 220);
+}
+
+#search_btn{
+    border-radius: 5px; 
+    border: 0;
+    margin-top: 15px;
+    width: 10em;
+    height: 2em;
+    text-align: center;
+    background-color: rgb(51, 77, 206);
+    color: aliceblue;
+}
+
+
+@media screen and (min-width: 768px) {
+    #search_text{
+        width: 50%;
+        height: 2em;
+    }
+
+#search_btn{
+    width: 10em;
+    height: 2em;
+}
+}
+
+
+@media screen and (min-width: 1224px) {
+
 }
