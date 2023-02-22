@@ -17,9 +17,9 @@ window.addEventListener("load" , () => {
         });
 
         const getImgs = data => {
-         loadingPage(); 
+            loadingPage(); 
             setTimeout(() => {
-            resultPage();  
+            resultPage(data);  
            },1000);
            
         } 
@@ -36,7 +36,8 @@ window.addEventListener("load" , () => {
             outputContainer.style.display = "none";
         }
 
-        const resultPage = () => {
+        const resultPage = text => {
+            history.pushState(null, null,  text + ".html");
             const wrapperButton = document.querySelector("#wrapper_btn");
             const searchBtn = document.querySelector("#search_btn");
 
@@ -46,6 +47,10 @@ window.addEventListener("load" , () => {
             outputContainer.style.display = "flex";
             form.classList.remove("search_class_hidden");
             form.classList.add("searched_class"); 
+        }
+
+        const getInfo = item => {
+            history.pushState(null, null,  item + ".html"); 
         }
 
 
