@@ -2,11 +2,13 @@ window.addEventListener("load" , () => {
     const form = document.querySelector("#form");
     const loading = document.querySelector("#loading");
     const outputContainer = document.querySelector("#output_container");
+    let searchField = document.querySelector("#search_text");
     
-
     form.addEventListener("submit", e => {
         e.preventDefault();
         const searchText = document.querySelector("#search_text").value;
+        
+
 
         if (searchText.trim().length < 1 ) {
             return; 
@@ -16,10 +18,10 @@ window.addEventListener("load" , () => {
          } 
         });
 
-        const getImgs = data => {
-         loadingPage(); 
+        const getImgs = (data)=> {
+            loadingPage(); 
             setTimeout(() => {
-            resultPage();  
+            resultPage(data);  
            },1000);
            
         } 
@@ -36,7 +38,8 @@ window.addEventListener("load" , () => {
             outputContainer.style.display = "none";
         }
 
-        const resultPage = () => {
+        const resultPage = text => {
+            history.pushState({text}, text, `${text}.html`);
             const wrapperButton = document.querySelector("#wrapper_btn");
             const searchBtn = document.querySelector("#search_btn");
 
@@ -45,9 +48,27 @@ window.addEventListener("load" , () => {
             wrapperButton.classList.add("wrapper_btn_class");
             outputContainer.style.display = "flex";
             form.classList.remove("search_class_hidden");
-            form.classList.add("searched_class"); 
+            form.classList.add("searched_class");
+            
+            
         }
 
+        const getInfo = item => {
+            history.pushState({item}, item,  `${item}.html`); 
+        }
+
+        window.addEventListener("popstate", e => {
+            if(e.state == null){
+                history.go(0);
+            }else if(e.state.text){ 
+                loadingPage();
+                resultPage(e.state.text);
+                searchField.setAttribute("value", decodeURIComponent(e.state.text));
+            }else if(e.state.item){
+                getInfo(e.state.item);
+            }
+               
+        });
 
 
 });
