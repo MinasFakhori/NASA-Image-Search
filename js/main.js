@@ -1,51 +1,52 @@
 window.addEventListener("load" , () => {
-    const searchForm = document.querySelector("#search form");
+    const form = document.querySelector("#form");
     const loading = document.querySelector("#loading");
-    const body = document.querySelector("body");
-    const title = document.querySelector("#title");
-    const searchBtn = document.querySelector("#search_btn");
     const outputContainer = document.querySelector("#output_container");
+    
 
-
-    searchForm.addEventListener("submit", e => {
+    form.addEventListener("submit", e => {
         e.preventDefault();
-
         const searchText = document.querySelector("#search_text").value;
 
-
-        if (searchText.trim().length <= 1 ) {
+        if (searchText.trim().length < 1 ) {
             return; 
         }else{
-          const data = encodeURIComponent(searchText); 
-           getTheData(data);
-           searchForm.style.display = "none";
-           loading.style.display = "flex";
-           body.style.backgroundImage = "none";
-           body.style.backgroundColor = "#000";
-           title.style.display = "none";
-            outputContainer.style.display = "none";
+            const data = encodeURIComponent(searchText);
+            getImgs(data);
+         } 
+        });
 
-           setTimeout(() => {
-            loading.style.display = "none";
-            searchForm.style.display = "flex"; //clean this up
-            searchForm.style.flexDirection = "row";
-            searchBtn.style.marginTop = "0";
-            searchForm.padding = "0";
-            searchForm.style.marginTop = "0px";
-            searchBtn.style.marginLeft = "2px";
-            outputContainer.style.display = "flex";
-          
+        const getImgs = data => {
+         loadingPage(); 
+            setTimeout(() => {
+            resultPage();  
            },1000);
            
         } 
-        });
 
-        const getTheData = data => {
-
-
+        const loadingPage = () => {
+            const title = document.querySelector("#title");
+            const body = document.querySelector("body");
+            
+            loading.style.display = "flex";
+            title.style.display = "none";
+            body.classList.add("searched_body"); 
+            form.classList.remove("search_class");
+            form.classList.add("search_class_hidden");
+            outputContainer.style.display = "none";
         }
 
+        const resultPage = () => {
+            const wrapperButton = document.querySelector("#wrapper_btn");
+            const searchBtn = document.querySelector("#search_btn");
 
+            loading.style.display = "none";
+            searchBtn.classList.add("searched_btn_class");
+            wrapperButton.classList.add("wrapper_btn_class");
+            outputContainer.style.display = "flex";
+            form.classList.remove("search_class_hidden");
+            form.classList.add("searched_class"); 
+        }
 
 
 
