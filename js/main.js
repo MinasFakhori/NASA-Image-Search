@@ -2,11 +2,13 @@ window.addEventListener("load" , () => {
     const form = document.querySelector("#form");
     const loading = document.querySelector("#loading");
     const outputContainer = document.querySelector("#output_container");
+    let searchField = document.querySelector("#search_text");
     
-
     form.addEventListener("submit", e => {
         e.preventDefault();
         const searchText = document.querySelector("#search_text").value;
+        
+
 
         if (searchText.trim().length < 1 ) {
             return; 
@@ -16,7 +18,7 @@ window.addEventListener("load" , () => {
          } 
         });
 
-        const getImgs = data => {
+        const getImgs = (data)=> {
             loadingPage(); 
             setTimeout(() => {
             resultPage(data);  
@@ -37,7 +39,7 @@ window.addEventListener("load" , () => {
         }
 
         const resultPage = text => {
-            history.pushState(null, null,  text + ".html");
+            history.pushState({text}, text, `${text}.html`);
             const wrapperButton = document.querySelector("#wrapper_btn");
             const searchBtn = document.querySelector("#search_btn");
 
@@ -46,13 +48,27 @@ window.addEventListener("load" , () => {
             wrapperButton.classList.add("wrapper_btn_class");
             outputContainer.style.display = "flex";
             form.classList.remove("search_class_hidden");
-            form.classList.add("searched_class"); 
+            form.classList.add("searched_class");
+            
+            
         }
 
         const getInfo = item => {
-            history.pushState(null, null,  item + ".html"); 
+            history.pushState({item}, item,  `${item}.html`); 
         }
 
+        window.addEventListener("popstate", e => {
+            if(e.state == null){
+                location.reload();
+            }else if(e.state.text){ 
+                loadingPage();
+                resultPage(e.state.text);
+                searchField.setAttribute("value", decodeURIComponent(e.state.text));
+            }else if(e.state.item){
+                getInfo(e.state.item);
+            }
+               
+        });
 
 
 });
