@@ -59,7 +59,7 @@ window.addEventListener("load" , () => {
 
         window.addEventListener("popstate", e => {
             if(e.state == null){
-                location.reload();
+                history.go(0);
             }else if(e.state.text){ 
                 loadingPage();
                 resultPage(e.state.text);
