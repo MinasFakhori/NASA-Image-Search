@@ -33,7 +33,7 @@ body{
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-top: 7em;
+    margin-top: 5em;
     color: aliceblue;
 }
 
@@ -65,7 +65,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 20vh;
+    height: 15em;
     width: 100%;
 }
 
@@ -90,13 +90,16 @@ body{
    color:rgb(220, 220, 220);
 }
 
+#search_text{
+    height: 3em;
+}
 
 .search_btn_class{
     border-radius: 5px; 
     border: 0;
     margin-top: 25px;
     width: 10em;
-    height: 2em;
+    height: 4em;
     text-align: center;
     background-color: #113455;
     color: aliceblue;
@@ -119,15 +122,17 @@ body{
 #output_container{
     display: none;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    text-align: center;
     width: 95vw;
     height: 100%;
+    padding: 0%;
     border-radius: 10px;
     border-color: #113455;
     border-style: solid;
     margin-left: 2.4%;
+    margin-top: 2em;
 }
 
 
@@ -178,6 +183,10 @@ body{
         padding: 3px;
         border-radius: 5px;
         margin-left: -6px;
+    }
+
+    #output_container{
+        margin-top: 0;
     }
 
 }
