@@ -58,9 +58,9 @@ window.addEventListener("load" , () => {
         }
 
         window.addEventListener("popstate", e => {
-            if(e.state == null){
-                history.go(0);
-            }else if(e.state.text){ 
+            if(e.state.text == null){
+                console.log("temp")
+            }else if(e.state.text == text ){ 
                 loadingPage();
                 resultPage(e.state.text);
                 searchField.setAttribute("value", decodeURIComponent(e.state.text));
@@ -69,6 +69,8 @@ window.addEventListener("load" , () => {
             }
                
         });
+
+        history.replaceState({text : null }, "Default" , "/");
 
 
 });
