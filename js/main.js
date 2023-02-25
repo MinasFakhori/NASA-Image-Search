@@ -35,11 +35,14 @@ window.addEventListener("load" , () => {
                 const response = JSON.parse(xhr.responseText);
                 const items = response.collection.items;
                 for (let i = 0; i < items.length; i++) {
+                if (items[i].links && items[i].links.length > 0) {                   
                     const img = document.createElement("img");
                     img.src = items[i].links[0].href;
                     img.alt = items[i].data[0].title;
                     outputContainer.appendChild(img);
-            }
+         
+                }
+        }
 
         }
         });
@@ -97,7 +100,6 @@ window.addEventListener("load" , () => {
                 defaultPage();
             }else if(e.state.state != null){ 
                 loadingPage();
-                historyResultPage();
                 searchField.setAttribute("value", decodeURIComponent(e.state.text));
             }
                
