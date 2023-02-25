@@ -7,6 +7,8 @@ window.addEventListener("load" , () => {
     const wrapperButton = document.querySelector("#wrapper_btn");
     const searchBtn = document.querySelector("#search_btn");
     const searchField = document.querySelector("#search_text");
+    const errorMsg = document.querySelector("#error_msg");
+    const error = document.querySelector("#error");
     
     form.addEventListener("submit", e => {
         e.preventDefault();
@@ -15,77 +17,44 @@ window.addEventListener("load" , () => {
             return; 
         }else{
             const data = encodeURIComponent(searchText);
-            getQuery(data);
+            getQuery(data, false);
          } 
     });
 
 
-
-
-    const  historyGetQuery = data => {
+    
+const getQuery = (data , isHistory) => {
         loadingPage(); 
         removeItems();
+        
         const xhr = new XMLHttpRequest();
         xhr.addEventListener("load", () => {
             if (xhr.status === 200){
-                historyResultPage(data);
+                resultPage(data , isHistory);
                 const response = JSON.parse(xhr.responseText);
                 const items = response.collection.items;
-                console.log(items.length);
-                if (items.length < 1) {
-                    for(const item of items) {
-                        if (item.links && item.links.length > 0) {                   
+                if (items.length > 1) {
+                    for (let i = 0; i < items.length; i++) {
+                        if (items[i].links && items[i].links.length > 0) {                   
                             const img = document.createElement("img");
-                            img.src = item.links[0].href;
-                            img.alt = item.data[0].title;
+                            img.src = items[i].links[0].href;
+                            img.alt = items[i].data[0].title;
+                            img.classList.add("imgs");
                             outputContainer.appendChild(img);
                         }
-        }
-    }else{
-        console.log("item not found");
-    }
-
-        }else{
-            console.log("error code " + xhr.status + " e");
-        }
-
-        });
-
-    
-        
-    xhr.open("GET" , "https://images-api.nasa.gov/search?q=" + data, true);
-    xhr.send();
-    } 
-
-const getQuery = data => {
-
-        loadingPage(); 
-        removeItems();
-        const xhr = new XMLHttpRequest();
-        xhr.addEventListener("load", () => {
-            if (xhr.status === 200){
-                resultPage(data);
-                const response = JSON.parse(xhr.responseText);
-                const items = response.collection.items;
-                for (let i = 0; i < items.length; i++) {
-                if (items[i].links && items[i].links.length > 0) {                   
-                    const img = document.createElement("img");
-                    img.src = items[i].links[0].href;
-                    img.alt = items[i].data[0].title;
-                    img.classList.add("imgs");
-                    outputContainer.appendChild(img);
-         
+                    }
+                }else{
+                    errorPage(`No result found for ${decodeURIComponent(data)}`);
                 }
-        }
-
-        }
+            }else{
+                errorPage(`Something went wrong! ${xhr.status} error status code`);
+            }
         });
-
-    
-
         
-    xhr.open("GET" , "https://images-api.nasa.gov/search?q=" + data, true);
-    xhr.send();
+    
+        xhr.open("GET" , "https://images-api.nasa.gov/search?q=" + data, true);
+    
+        xhr.send();
     } 
 
     
@@ -104,6 +73,9 @@ const getQuery = data => {
             outputContainer.style.display = "none";
             searchBtn.classList.remove("searched_btn_class");
             wrapperButton.classList.remove("wrapper_btn_class");
+            error.style.display = "none";
+            form.classList.remove("search_class_hidden");
+
         };
 
 
@@ -116,22 +88,40 @@ const getQuery = data => {
             form.classList.remove("search_class");
             form.classList.add("search_class_hidden");
             outputContainer.style.display = "none";
+            error.style.display = "none";
+
         }
 
-        const resultPage = text => {
-            historyResultPage();
-            history.pushState({state: `search:${text}`}, text, `search+${text}.html`);
-        }
+        
 
-    const historyResultPage = () => {
+    const resultPage = (text , isHistory) => {
             loading.style.display = "none";
             searchBtn.classList.add("searched_btn_class");
             wrapperButton.classList.add("wrapper_btn_class");
             outputContainer.style.display = "grid";
             form.classList.remove("search_class_hidden");
             form.classList.add("searched_class");
-            searchField.setAttribute('value', "moon");
+            error.style.display = "none";
+
+            if (!isHistory) {
+             history.pushState({state: `search:${text}`}, text, `search+${text}.html`);   
+            } 
     }
+
+    const errorPage = errorMessage => {
+        loading.style.display = "none";
+        title.style.display = "none";
+        body.classList.add("searched_body"); 
+        form.classList.remove("search_class");
+        form.classList.add("search_class_hidden");
+        outputContainer.style.display = "none";
+
+        error.style.display = "flex";
+        errorMsg.textContent = errorMessage;
+
+
+    }
+
 
        
         window.addEventListener("popstate", e => {
@@ -141,7 +131,7 @@ const getQuery = data => {
             }else if(e.state.state != null){ 
                 console.log(e.state.state);
                 console.log(e.state.state.split(":")[1]);
-                historyGetQuery(e.state.state.split(":")[1]);
+                getQuery(e.state.state.split(":")[1] , true);
                 searchField.value = e.state.state.split(":")[1];
                 // searchField.setAttribute('value', e.state.state.split(":")[1]);
                 console.log(searchField.value);

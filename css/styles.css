@@ -154,6 +154,31 @@ body{
     background-color: #000000;
 }
 
+/*Error Message*/
+
+#error{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    width: 100%;
+    flex-direction: column;
+
+}
+
+#error_msg{
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 8em;
+}
+
+#error_img {
+    width: 250px;
+    border-radius: 10px;
+    margin-top: 5em;
+}
+
+
 @media screen and (min-width: 768px) {
     #output_container{
         margin-top: 0;
@@ -170,6 +195,10 @@ body{
         height: 3em;
     }
 
+
+#error_img {
+    width: 20%;
+}
 
     #title{
         display: flex;
@@ -194,7 +223,9 @@ body{
     }
     
     
-
+#error_img {
+    width: 10%;
+}
 
     .searched_btn_class{
         margin-top: 0;
