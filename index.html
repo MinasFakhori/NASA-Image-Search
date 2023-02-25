@@ -1,47 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="imgs/logo.ico">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="imgs/logo.ico" />
     <title>Nasa Search</title>
-    <link href = "css/styles.css" rel = "stylesheet" type= "text/css">
-    <script src = "js/main.js" defer></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
+    <script src="js/main.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <main>
-        <header>
-            <h1 id = "title">NASA Image Search</h1>
-        </header>
-        <div id = "search">
-            <form id = "form" class="search_class">
-                <label id = "search_label" for = "search_text">Search</label>
-                <input type="text" id = "search_text" placeholder = "Search image" >
-                <div id = "wrapper_btn">
-                    <input type="submit" id= "search_btn" class = "search_btn_class" value="Search" >
-                </div>
-            </form>
-        </div>
+      <header>
+        <h1 id="title">NASA Image Search</h1>
+      </header>
+      <div id="search">
+        <form id="form" class="search_class">
+          <label id="search_label" for="search_text">Search</label>
+          <input type="text" id="search_text" placeholder="Search image" />
+          <div id="wrapper_btn">
+            <input
+              type="submit"
+              id="search_btn"
+              class="search_btn_class"
+              value="Search"
+            />
+          </div>
+        </form>
+      </div>
 
-        <div id = "loading">
-            <img src = "imgs/loading.gif" alt = "loading">
-        </div>
+      <div id="loading">
+        <img src="imgs/loading.gif" alt="loading" />
+      </div>
 
+      <div id="output_container"></div>
 
-        <div id = output_container> </div>
-
-        <div id = "error">
-        <img id = "error_img" src = "imgs/error_puppy.png" alt = "error puppy image">
-        <p id = "error_msg"></p>
-        <button id = "error_btn">Try again</button>
-        </div>
+      <div id="error">
+        <img
+          id="error_img"
+          src="imgs/error_puppy.png"
+          alt="error puppy image"
+        />
+        <p id="error_msg"></p>
+        <button id="error_btn">Try again</button>
+      </div>
     </main>
     <footer>
-        <p>&copy; Minas</p> 
+      <p>&copy; Minas</p>
     </footer>
-</body>
+  </body>
 </html>
