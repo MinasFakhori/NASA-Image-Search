@@ -6,7 +6,7 @@ window.addEventListener("load" , () => {
     const body = document.querySelector("body");
     const wrapperButton = document.querySelector("#wrapper_btn");
     const searchBtn = document.querySelector("#search_btn");
-    let searchField = document.querySelector("#search_text");
+    const searchField = document.querySelector("#search_text");
     
     form.addEventListener("submit", e => {
         e.preventDefault();
@@ -25,7 +25,36 @@ window.addEventListener("load" , () => {
 
 
 
-    const getQuery = data => {
+    const  historyGetQuery = data => {
+        loadingPage(); 
+        removeItems();
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener("load", () => {
+            if (xhr.status === 200){
+                historyResultPage(data);
+                const response = JSON.parse(xhr.responseText);
+                const items = response.collection.items;
+                for(const item of items) {
+                    if (item.links && item.links.length > 0) {                   
+                        const img = document.createElement("img");
+                        img.src = item.links[0].href;
+                        img.alt = item.data[0].title;
+                        outputContainer.appendChild(img);
+                }
+        }
+
+        }
+        });
+
+    
+
+        
+    xhr.open("GET" , "https://images-api.nasa.gov/search?q=" + data, true);
+    xhr.send();
+    } 
+
+const getQuery = data => {
+
         loadingPage(); 
         removeItems();
         const xhr = new XMLHttpRequest();
@@ -39,6 +68,7 @@ window.addEventListener("load" , () => {
                     const img = document.createElement("img");
                     img.src = items[i].links[0].href;
                     img.alt = items[i].data[0].title;
+                    img.classList.add("imgs");
                     outputContainer.appendChild(img);
          
                 }
@@ -46,10 +76,14 @@ window.addEventListener("load" , () => {
 
         }
         });
+
+    
+
         
     xhr.open("GET" , "https://images-api.nasa.gov/search?q=" + data, true);
     xhr.send();
     } 
+
     
     const removeItems = () => {
         while (outputContainer.firstChild) {
@@ -89,18 +123,24 @@ window.addEventListener("load" , () => {
             loading.style.display = "none";
             searchBtn.classList.add("searched_btn_class");
             wrapperButton.classList.add("wrapper_btn_class");
-            outputContainer.style.display = "flex";
+            outputContainer.style.display = "grid";
             form.classList.remove("search_class_hidden");
             form.classList.add("searched_class");
+            searchField.setAttribute('value', "moon");
     }
 
        
         window.addEventListener("popstate", e => {
             if(e.state.state == "index"){
                 defaultPage();
+                searchField.value = "";
             }else if(e.state.state != null){ 
-                loadingPage();
-                searchField.setAttribute("value", decodeURIComponent(e.state.text));
+                console.log(e.state.state);
+                console.log(e.state.state.split(":")[1]);
+                historyGetQuery(e.state.state.split(":")[1]);
+                searchField.value = e.state.state.split(":")[1];
+                // searchField.setAttribute('value', e.state.state.split(":")[1]);
+                console.log(searchField.value);
             }
                
         });
