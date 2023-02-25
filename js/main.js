@@ -2,6 +2,10 @@ window.addEventListener("load" , () => {
     const form = document.querySelector("#form");
     const loading = document.querySelector("#loading");
     const outputContainer = document.querySelector("#output_container");
+    const title = document.querySelector("#title");
+    const body = document.querySelector("body");
+    const wrapperButton = document.querySelector("#wrapper_btn");
+    const searchBtn = document.querySelector("#search_btn");
     let searchField = document.querySelector("#search_text");
     
     form.addEventListener("submit", e => {
@@ -14,22 +18,35 @@ window.addEventListener("load" , () => {
             return; 
         }else{
             const data = encodeURIComponent(searchText);
-            getImgs(data);
+            getQuery(data);
          } 
-        });
+    });
 
-        const getImgs = (data)=> {
-            loadingPage(); 
-            setTimeout(() => {
+
+
+
+    const getQuery = data => {
+        loadingPage(); 
+        setTimeout(() => {
             resultPage(data);  
-           },1000);
-           
-        } 
+        },1000);   
+    } 
+
+    const defaultPage = () => {
+            loading.style.display = "none";
+            title.style.display = "flex";
+            body.classList.remove("searched_body");
+            form.classList.remove("searched_class");
+            form.classList.add("search_class");
+            outputContainer.style.display = "none";
+            searchBtn.classList.remove("searched_btn_class");
+            wrapperButton.classList.remove("wrapper_btn_class");
+        };
+
+
+
 
         const loadingPage = () => {
-            const title = document.querySelector("#title");
-            const body = document.querySelector("body");
-            
             loading.style.display = "flex";
             title.style.display = "none";
             body.classList.add("searched_body"); 
@@ -39,38 +56,32 @@ window.addEventListener("load" , () => {
         }
 
         const resultPage = text => {
-            history.pushState({text}, text, `${text}.html`);
-            const wrapperButton = document.querySelector("#wrapper_btn");
-            const searchBtn = document.querySelector("#search_btn");
+            historyResultPage();
+            history.pushState({state: `search:${text}`}, text, `search+${text}.html`);
+        }
 
+    const historyResultPage = () => {
             loading.style.display = "none";
             searchBtn.classList.add("searched_btn_class");
             wrapperButton.classList.add("wrapper_btn_class");
             outputContainer.style.display = "flex";
             form.classList.remove("search_class_hidden");
             form.classList.add("searched_class");
-            
-            
-        }
+    }
 
-        const getInfo = item => {
-            history.pushState({item}, item,  `${item}.html`); 
-        }
-
+       
         window.addEventListener("popstate", e => {
-            if(e.state.text == null){
-                console.log("temp")
-            }else if(e.state.text == text ){ 
+            if(e.state.state == "index"){
+                defaultPage();
+            }else if(e.state.state != null){ 
                 loadingPage();
-                resultPage(e.state.text);
+                historyResultPage();
                 searchField.setAttribute("value", decodeURIComponent(e.state.text));
-            }else if(e.state.item){
-                getInfo(e.state.item);
             }
                
         });
 
-        history.replaceState({text : null }, "Default" , "/");
 
+        history.replaceState({state: "index"}, "default", "index.html");
 
 });
