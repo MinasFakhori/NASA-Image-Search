@@ -27,10 +27,32 @@ window.addEventListener("load" , () => {
 
     const getQuery = data => {
         loadingPage(); 
-        setTimeout(() => {
-            resultPage(data);  
-        },1000);   
+        removeItems();
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener("load", () => {
+            if (xhr.status === 200){
+                resultPage(data);
+                const response = JSON.parse(xhr.responseText);
+                const items = response.collection.items;
+                for (let i = 0; i < items.length; i++) {
+                    const img = document.createElement("img");
+                    img.src = items[i].links[0].href;
+                    img.alt = items[i].data[0].title;
+                    outputContainer.appendChild(img);
+            }
+
+        }
+        });
+        
+    xhr.open("GET" , "https://images-api.nasa.gov/search?q=" + data, true);
+    xhr.send();
     } 
+    
+    const removeItems = () => {
+        while (outputContainer.firstChild) {
+            outputContainer.removeChild(outputContainer.firstChild);
+        }
+    }
 
     const defaultPage = () => {
             loading.style.display = "none";
