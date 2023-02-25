@@ -7,7 +7,6 @@ window.addEventListener("load" , () => {
     const wrapperButton = document.querySelector("#wrapper_btn");
     const searchBtn = document.querySelector("#search_btn");
     const searchField = document.querySelector("#search_text");
-    const errorMsg = document.querySelector("#error_msg");
     const error = document.querySelector("#error");
     
     form.addEventListener("submit", e => {
@@ -34,11 +33,11 @@ const getQuery = (data , isHistory) => {
                 const response = JSON.parse(xhr.responseText);
                 const items = response.collection.items;
                 if (items.length > 1) {
-                    for (let i = 0; i < items.length; i++) {
-                        if (items[i].links && items[i].links.length > 0) {                   
+                    for (item of items){
+                        if (item.links && item.links.length > 0) {                   
                             const img = document.createElement("img");
-                            img.src = items[i].links[0].href;
-                            img.alt = items[i].data[0].title;
+                            img.src = item.links[0].href;
+                            img.alt = item.data[0].title;
                             img.classList.add("imgs");
                             outputContainer.appendChild(img);
                         }
@@ -109,6 +108,8 @@ const getQuery = (data , isHistory) => {
     }
 
     const errorPage = errorMessage => {
+        const errorMsg = document.querySelector("#error_msg");
+        const errorBtn = document.querySelector("#error_btn");
         loading.style.display = "none";
         title.style.display = "none";
         body.classList.add("searched_body"); 
@@ -118,6 +119,11 @@ const getQuery = (data , isHistory) => {
 
         error.style.display = "flex";
         errorMsg.textContent = errorMessage;
+
+        errorBtn.addEventListener("click", () => {
+            defaultPage();
+            searchField.value = "";
+        });
 
 
     }
@@ -132,7 +138,7 @@ const getQuery = (data , isHistory) => {
                 console.log(e.state.state);
                 console.log(e.state.state.split(":")[1]);
                 getQuery(e.state.state.split(":")[1] , true);
-                searchField.value = e.state.state.split(":")[1];
+                searchField.value = decodeURIComponent(e.state.state.split(":")[1]);
                 // searchField.setAttribute('value', e.state.state.split(":")[1]);
                 console.log(searchField.value);
             }
