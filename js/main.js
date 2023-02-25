@@ -8,6 +8,10 @@ window.addEventListener("load", () => {
   const searchBtn = document.querySelector("#search_btn");
   const searchField = document.querySelector("#search_text");
   const error = document.querySelector("#error");
+  const focus = document.querySelector("#focus");
+  const main = document.querySelector("main");
+  const footer = document.querySelector("footer");
+  const searchContainer = document.querySelector("#search");
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -24,6 +28,8 @@ window.addEventListener("load", () => {
     loadingPage();
     removeItems();
 
+    let imgInFocus = false;
+
     const xhr = new XMLHttpRequest();
     xhr.addEventListener("load", () => {
       if (xhr.status === 200) {
@@ -38,6 +44,25 @@ window.addEventListener("load", () => {
               img.alt = item.data[0].title;
               img.classList.add("imgs");
               outputContainer.appendChild(img);
+
+              img.addEventListener("click", () => {
+                if (!imgInFocus) {
+                  imgInFocus = true;
+
+                  footer.classList.add("focus_class");
+                  searchContainer.classList.add("focus_class");
+                  outputContainer.classList.add("focus_class");
+
+                  focus.style.display = "flex";
+                  const title = document.createElement("h2");
+                  title.textContent = item.data[0].title;
+                  const desc = document.createElement("p");
+                  desc.textContent = item.data[0].description;
+                  focus.appendChild(title);
+                  focus.appendChild(img);
+                  focus.appendChild(desc);
+                }
+              });
             }
           }
         } else {
@@ -70,6 +95,11 @@ window.addEventListener("load", () => {
     wrapperButton.classList.remove("wrapper_btn_class");
     error.style.display = "none";
     form.classList.remove("search_class_hidden");
+
+    footer.classList.remove("focus_class");
+    searchContainer.classList.remove("focus_class");
+
+    focus.style.display = "none";
   };
 
   const loadingPage = () => {
@@ -80,6 +110,7 @@ window.addEventListener("load", () => {
     form.classList.add("search_class_hidden");
     outputContainer.style.display = "none";
     error.style.display = "none";
+    focus.style.display = "none";
   };
 
   const resultPage = (text, isHistory) => {
@@ -90,6 +121,11 @@ window.addEventListener("load", () => {
     form.classList.remove("search_class_hidden");
     form.classList.add("searched_class");
     error.style.display = "none";
+    focus.style.display = "none";
+
+    footer.classList.remove("focus_class");
+    searchContainer.classList.remove("focus_class");
+    outputContainer.classList.remove("focus_class");
 
     if (!isHistory) {
       history.pushState(
@@ -109,6 +145,9 @@ window.addEventListener("load", () => {
     form.classList.remove("search_class");
     form.classList.add("search_class_hidden");
     outputContainer.style.display = "none";
+
+    focus.style.display = "none";
+    footer.classList.remove("focus_class");
 
     error.style.display = "flex";
     errorMsg.textContent = errorMessage;
