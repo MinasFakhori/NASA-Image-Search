@@ -11,9 +11,6 @@ window.addEventListener("load" , () => {
     form.addEventListener("submit", e => {
         e.preventDefault();
         const searchText = document.querySelector("#search_text").value;
-        
-
-
         if (searchText.trim().length < 1 ) {
             return; 
         }else{
@@ -34,20 +31,27 @@ window.addEventListener("load" , () => {
                 historyResultPage(data);
                 const response = JSON.parse(xhr.responseText);
                 const items = response.collection.items;
-                for(const item of items) {
-                    if (item.links && item.links.length > 0) {                   
-                        const img = document.createElement("img");
-                        img.src = item.links[0].href;
-                        img.alt = item.data[0].title;
-                        outputContainer.appendChild(img);
-                }
+                console.log(items.length);
+                if (items.length < 1) {
+                    for(const item of items) {
+                        if (item.links && item.links.length > 0) {                   
+                            const img = document.createElement("img");
+                            img.src = item.links[0].href;
+                            img.alt = item.data[0].title;
+                            outputContainer.appendChild(img);
+                        }
+        }
+    }else{
+        console.log("item not found");
+    }
+
+        }else{
+            console.log("error code " + xhr.status + " e");
         }
 
-        }
         });
 
     
-
         
     xhr.open("GET" , "https://images-api.nasa.gov/search?q=" + data, true);
     xhr.send();
