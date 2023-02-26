@@ -20,15 +20,20 @@ window.addEventListener("load", () => {
   let imgInFocus = false;
   let scrollPosition;
   let searchIsEmpty = true;
+  let isHomePage = true;
 
   searchField.addEventListener("input", (e) => {
-clearAll.classList.remove("clear_class_searched");
+    let className; 
+    if (isHomePage){
+      className = "clear_class_search";
+    }else{
+      className = "clear_class_searched";
+    }
     if (e.target.value.length > 0) {
-      clearAll.classList.add("clear_class_search");
+      clearAll.classList.add(className);
       clearAll.classList.remove("clear_class_hidden");
     } else {
-      clearAll.classList.remove("clear_class_search");
-      
+      clearAll.classList.remove(className);
       clearAll.classList.add("clear_class_hidden");
     }
   });
@@ -140,6 +145,7 @@ clearAll.classList.remove("clear_class_searched");
     error.style.display = "none";
     form.classList.remove("search_class_hidden");
 
+    isHomePage = true;
     footer.classList.remove("focus_class");
     searchContainer.classList.remove("focus_class");
 
@@ -195,6 +201,8 @@ clearAll.classList.remove("clear_class_searched");
     outputContainer.classList.remove("focus_class");
     clearAll.classList.remove("clear_class_search");
     clearAll.classList.add("clear_class_searched");
+
+    isHomePage = false; 
     
 
     if (!isHistory) {
