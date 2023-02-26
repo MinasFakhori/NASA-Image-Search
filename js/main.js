@@ -1,16 +1,16 @@
 window.addEventListener("load", () => {
-  const form = document.querySelector("#form");
+  const form = document.querySelector("#search_form");
   const loading = document.querySelector("#loading");
   const outputContainer = document.querySelector("#output_container");
   const title = document.querySelector("#title");
   const body = document.querySelector("body");
-  const wrapperButton = document.querySelector("#wrapper_btn");
+  const wrapperButton = document.querySelector("#btn_container");
   const searchBtn = document.querySelector("#search_btn");
-  const searchField = document.querySelector("#search_text");
+  const searchField = document.querySelector("#search_input");
   const error = document.querySelector("#error");
   const focus = document.querySelector("#focus");
   const footer = document.querySelector("footer");
-  const searchContainer = document.querySelector("#search");
+  const searchContainer = document.querySelector("#search_container");
   const close = document.querySelector("#close");
   const focusTitle = document.querySelector("#focus_title");
   const focusImg = document.querySelector("#focus_img");
@@ -19,10 +19,31 @@ window.addEventListener("load", () => {
 
   let imgInFocus = false;
   let scrollPosition;
+  let searchIsEmpty = true;
+
+  searchField.addEventListener("input", (e) => {
+clearAll.classList.remove("clear_class_searched");
+    if (e.target.value.length > 0) {
+      clearAll.classList.add("clear_class_search");
+      clearAll.classList.remove("clear_class_hidden");
+    } else {
+      clearAll.classList.remove("clear_class_search");
+      
+      clearAll.classList.add("clear_class_hidden");
+    }
+  });
+
+  clearAll.addEventListener("click", (e) => {
+    e.preventDefault();
+    searchField.value = "";
+    clearAll.classList.remove("clear_class_search");
+    clearAll.classList.remove("clear_class_searched");
+    clearAll.classList.add("clear_class_hidden");
+  });
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const searchText = document.querySelector("#search_text").value;
+    const searchText = document.querySelector("#search_input").value;
     if (searchText.trim().length < 1) {
       defaultPage();
     } else {
@@ -125,9 +146,11 @@ window.addEventListener("load", () => {
     document.title = "NASA Image Search";
 
     focus.style.display = "none";
+    clearAll.classList.remove("clear_class_searched");
+    clearAll.classList.remove("clear_class_search");
+    clearAll.classList.add("clear_class_hidden");
+    
 
-    clearAll.classList.remove("clear_all_class");
-    clearAll.classList.add("hidden_clear_class");
   };
 
   const loadingPage = () => {
@@ -142,7 +165,6 @@ window.addEventListener("load", () => {
 
     document.title = "Loading...";
 
-    clearAll.classList.remove("clear_all_class");
     clearAll.classList.add("hidden_clear_class");
   };
 
@@ -150,10 +172,8 @@ window.addEventListener("load", () => {
     e.preventDefault();
     searchField.value = "";
     if (searchField.value.trim().length > 0) {
-      clearAll.classList.add("clear_all_class");
       clearAll.classList.remove("hidden_clear_class");
     } else {
-      clearAll.classList.remove("clear_all_class");
       clearAll.classList.add("hidden_clear_class");
     }
   });
@@ -173,14 +193,9 @@ window.addEventListener("load", () => {
     footer.classList.remove("focus_class");
     searchContainer.classList.remove("focus_class");
     outputContainer.classList.remove("focus_class");
-
-    searchField.addEventListener("input", (e) => {
-      clearAll.classList.add("clear_all_class");
-      clearAll.classList.remove("hidden_clear_class");
-    });
-
-    clearAll.classList.add("clear_all_class");
-    clearAll.classList.remove("hidden_clear_class");
+    clearAll.classList.remove("clear_class_search");
+    clearAll.classList.add("clear_class_searched");
+    
 
     if (!isHistory) {
       history.pushState(
@@ -201,8 +216,6 @@ window.addEventListener("load", () => {
     form.classList.add("search_class_hidden");
     outputContainer.style.display = "none";
 
-    clearAll.classList.remove("clear_all_class");
-    clearAll.classList.add("hidden_clear_class");
 
     focus.style.display = "none";
     footer.classList.remove("focus_class");
