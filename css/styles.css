@@ -203,6 +203,19 @@ body {
   filter: blur(5px);
 }
 
+#close{
+  cursor: pointer;
+  width: 30px !important;
+  height: 30px !important;
+  margin-left: 95%;
+ transition: transform .5s ease-in-out;
+}
+
+#close:hover{
+  transform: rotate(90deg);
+}
+
+
 /* Media Queries */
 
 @media screen and (min-width: 768px) {

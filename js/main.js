@@ -12,6 +12,10 @@ window.addEventListener("load", () => {
   const main = document.querySelector("main");
   const footer = document.querySelector("footer");
   const searchContainer = document.querySelector("#search");
+  const closeBtn = document.querySelector("#close");
+  const focusTitle = document.querySelector("#focus_title");
+  const focusImg = document.querySelector("#focus_img");
+  const focusDesc = document.querySelector("#focus_desc");
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -39,9 +43,14 @@ window.addEventListener("load", () => {
         if (items.length > 1) {
           for (item of items) {
             if (item.links && item.links.length > 0) {
+              const imgSrc = item.links[0].href;
+              const imgTitle = item.data[0].title;
+              const imgDesc = item.data[0].description;
+
+
               const img = document.createElement("img");
-              img.src = item.links[0].href;
-              img.alt = item.data[0].title;
+              img.src = imgSrc;
+              img.alt = imgTitle;
               img.classList.add("imgs");
               outputContainer.appendChild(img);
 
@@ -49,18 +58,18 @@ window.addEventListener("load", () => {
                 if (!imgInFocus) {
                   imgInFocus = true;
 
+
+
                   footer.classList.add("focus_class");
                   searchContainer.classList.add("focus_class");
                   outputContainer.classList.add("focus_class");
 
                   focus.style.display = "flex";
-                  const title = document.createElement("h2");
-                  title.textContent = item.data[0].title;
-                  const desc = document.createElement("p");
-                  desc.textContent = item.data[0].description;
-                  focus.appendChild(title);
-                  focus.appendChild(img);
-                  focus.appendChild(desc);
+
+                  focusTitle.textContent = imgTitle;
+                  focusImg.src = imgSrc;
+                  focusImg.alt = imgTitle;
+                  focusDesc.textContent = imgDesc;
                 }
               });
             }
@@ -83,6 +92,8 @@ window.addEventListener("load", () => {
       outputContainer.removeChild(outputContainer.firstChild);
     }
   };
+
+  
 
   const defaultPage = () => {
     loading.style.display = "none";
