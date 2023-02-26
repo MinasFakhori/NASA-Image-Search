@@ -69,6 +69,8 @@ body {
   height: 20vh;
   width: 100%;
   margin-left: 1em;
+  margin-right: 1em;
+  margin-top: 1em;
 }
 
 .search_class_hidden {
@@ -111,13 +113,14 @@ body {
   grid-gap: 1em;
   justify-items: center;
   align-items: center;
-  width: 93vw;
+  width: 95%;
   height: 100%;
   padding: 9px;
   border-radius: 10px;
   border-color: #113455;
   border-style: solid;
-  margin-left: 2%;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
   margin-top: 2em;
 }
 
@@ -302,6 +305,8 @@ display: none;
 
   #output_container {
     margin-top: 0;
+    margin-left: 2em; 
+    margin-right: 2em;
     grid-template-columns: repeat(4, 1fr);
   }
 
