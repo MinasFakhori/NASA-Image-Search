@@ -9,19 +9,21 @@ window.addEventListener("load", () => {
   const searchField = document.querySelector("#search_text");
   const error = document.querySelector("#error");
   const focus = document.querySelector("#focus");
-  const main = document.querySelector("main");
   const footer = document.querySelector("footer");
   const searchContainer = document.querySelector("#search");
-  const closeBtn = document.querySelector("#close");
+  const close = document.querySelector("#close");
   const focusTitle = document.querySelector("#focus_title");
   const focusImg = document.querySelector("#focus_img");
   const focusDesc = document.querySelector("#focus_desc");
+
+  let imgInFocus = false;
+  let scrollPosition;
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const searchText = document.querySelector("#search_text").value;
     if (searchText.trim().length < 1) {
-      return;
+      defaultPage();
     } else {
       const data = encodeURIComponent(searchText);
       getQuery(data, false);
@@ -31,8 +33,6 @@ window.addEventListener("load", () => {
   const getQuery = (data, isHistory) => {
     loadingPage();
     removeItems();
-
-    let imgInFocus = false;
 
     const xhr = new XMLHttpRequest();
     xhr.addEventListener("load", () => {
@@ -47,7 +47,6 @@ window.addEventListener("load", () => {
               const imgTitle = item.data[0].title;
               const imgDesc = item.data[0].description;
 
-
               const img = document.createElement("img");
               img.src = imgSrc;
               img.alt = imgTitle;
@@ -57,19 +56,10 @@ window.addEventListener("load", () => {
               img.addEventListener("click", () => {
                 if (!imgInFocus) {
                   imgInFocus = true;
+                  scrollPosition = window.pageYOffset;
+                  console.log(scrollPosition);
 
-
-
-                  footer.classList.add("focus_class");
-                  searchContainer.classList.add("focus_class");
-                  outputContainer.classList.add("focus_class");
-
-                  focus.style.display = "flex";
-
-                  focusTitle.textContent = imgTitle;
-                  focusImg.src = imgSrc;
-                  focusImg.alt = imgTitle;
-                  focusDesc.textContent = imgDesc;
+                  focusPage(isHistory, imgTitle, imgSrc, imgDesc);
                 }
               });
             }
@@ -87,13 +77,34 @@ window.addEventListener("load", () => {
     xhr.send();
   };
 
+  const focusPage = (isHistory, imgTitle, imgSrc, imgDesc) => {
+    footer.classList.add("focus_class");
+    searchContainer.classList.add("focus_class");
+    outputContainer.classList.add("focus_class");
+
+    focus.style.display = "flex";
+
+    focusTitle.textContent = imgTitle;
+    focusImg.src = imgSrc;
+    focusImg.alt = imgTitle;
+    focusDesc.textContent = imgDesc;
+  };
+
+  close.addEventListener("click", () => {
+    footer.classList.remove("focus_class");
+    searchContainer.classList.remove("focus_class");
+    outputContainer.classList.remove("focus_class");
+    imgInFocus = false;
+    focus.style.display = "none";
+
+    window.scrollTo(0, scrollPosition);
+  });
+
   const removeItems = () => {
     while (outputContainer.firstChild) {
       outputContainer.removeChild(outputContainer.firstChild);
     }
   };
-
-  
 
   const defaultPage = () => {
     loading.style.display = "none";
@@ -170,16 +181,15 @@ window.addEventListener("load", () => {
   };
 
   window.addEventListener("popstate", (e) => {
-    if (e.state.state == "index") {
+    if (e.state.state === "index") {
       defaultPage();
+      imgInFocus = false;
       searchField.value = "";
-    } else if (e.state.state != null) {
-      console.log(e.state.state);
-      console.log(e.state.state.split(":")[1]);
+    } else if (e.state.state.startsWith("search")) {
       getQuery(e.state.state.split(":")[1], true);
+      imgInFocus = false;
       searchField.value = decodeURIComponent(e.state.state.split(":")[1]);
       // searchField.setAttribute('value', e.state.state.split(":")[1]);
-      console.log(searchField.value);
     }
   });
 

@@ -198,11 +198,18 @@ body {
 
 .focus_class {
   position: fixed;
-  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
-  transition-duration: 0.5s;
+ transition: transform .5s ease-in-out;
   filter: blur(5px);
 }
 
+.focus_class p {
+display: none;
+
+}
+
+.focus_class form {
+  display: none;
+}
 #close{
   cursor: pointer;
   width: 30px !important;
