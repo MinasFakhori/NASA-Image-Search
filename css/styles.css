@@ -253,6 +253,7 @@ display: none;
     color: aliceblue;
   }
 
+
   body {
     height: 60vh;
   }
@@ -277,7 +278,21 @@ display: none;
     background-color: rgb(134, 132, 132);
     padding: 0.2em;
     border-radius: 5px;
-    margin-left: -6px;
+    margin-left: -8px;
+  }
+
+  .clear_all_class{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 1em;
+    width: 1em;
+    margin-right: 1em;
+    margin-top: 0.7em;
+  }
+
+  .hidden_clear_class{
+    display: none;
   }
 
   #output_container {
