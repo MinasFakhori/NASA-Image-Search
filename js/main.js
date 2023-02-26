@@ -122,6 +122,8 @@ window.addEventListener("load", () => {
     footer.classList.remove("focus_class");
     searchContainer.classList.remove("focus_class");
 
+    document.title = "NASA Image Search";
+
     focus.style.display = "none";
 
     clearAll.classList.remove("clear_all_class");
@@ -137,6 +139,8 @@ window.addEventListener("load", () => {
     outputContainer.style.display = "none";
     error.style.display = "none";
     focus.style.display = "none";
+
+    document.title = "Loading...";
 
     clearAll.classList.remove("clear_all_class");
     clearAll.classList.add("hidden_clear_class");
@@ -163,6 +167,8 @@ window.addEventListener("load", () => {
     form.classList.add("searched_class");
     error.style.display = "none";
     focus.style.display = "none";
+
+    document.title = `${decodeURIComponent(text)} - NASA Image Search`;
 
     footer.classList.remove("focus_class");
     searchContainer.classList.remove("focus_class");
