@@ -68,6 +68,7 @@ body {
   align-items: center;
   height: 20vh;
   width: 100%;
+  margin-left: 1em;
 }
 
 .search_class_hidden {
@@ -222,6 +223,10 @@ display: none;
   transform: rotate(90deg);
 }
 
+.hidden_clear_class , .clear_all_class{
+    display: none;
+  }
+
 
 /* Media Queries */
 
@@ -291,9 +296,7 @@ display: none;
     margin-top: 0.7em;
   }
 
-  .hidden_clear_class{
-    display: none;
-  }
+  
 
   #output_container {
     margin-top: 0;
