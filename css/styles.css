@@ -290,7 +290,7 @@ display: none;
   }
 
   #output_container {
-    margin: 0 3m 0;
+    margin: 0 3em 0;
     grid-template-columns: repeat(4, 1fr);
   }
 
