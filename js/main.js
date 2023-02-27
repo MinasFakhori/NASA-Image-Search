@@ -146,21 +146,6 @@ window.addEventListener("load", () => {
     document.title = "NASA Image Search"; // Change the title of the page.
     isHomePage = true;
 
-    focus.classList.add("hidden_focus");
-    focus.classList.remove("show_focus");
-
-    loading.classList.add("hidden_loading");
-    loading.classList.remove("show_loading");
-
-    title.classList.add("show_title");
-    title.classList.remove("hidden_title");
-    focus.classList.add("hidden_focus");
-    error.classList.add("hidden_error");
-    error.classList.remove("show_error");
-
-    outputContainer.classList.remove("show_output");
-    outputContainer.classList.add("hidden_output");
-
     body.classList.remove("searched_body");
     form.classList.remove("searched_class");
     searchBtn.classList.remove("searched_btn_class");
@@ -170,27 +155,33 @@ window.addEventListener("load", () => {
     searchContainer.classList.remove("other_focus");
     clearAll.classList.remove("clear_class_searched");
     clearAll.classList.remove("clear_class_search");
+    focus.classList.remove("show_focus");
+    title.classList.remove("hidden_title");
+    error.classList.remove("show_error");
+    outputContainer.classList.remove("show_output");
 
+    title.classList.add("show_title");
+    error.classList.add("hidden_error");
+    outputContainer.classList.add("hidden_output");
     clearAll.classList.add("clear_class_hidden");
     form.classList.add("search_class");
+    focus.classList.add("hidden_focus");
   };
 
   const loadingPage = () => {
     document.title = "Loading...";
 
     loading.classList.remove("hidden_loading");
-    loading.classList.add("show_loading");
     title.classList.remove("show_title");
-    title.classList.add("hidden_title");
-
     outputContainer.classList.remove("show_output");
-    outputContainer.classList.add("hidden_output");
-
-    error.classList.add("hidden_error");
     error.classList.remove("show_error");
-    focus.classList.add("hidden_focus");
     focus.classList.remove("show_focus");
 
+    loading.classList.add("show_loading");
+    title.classList.add("hidden_title");
+    outputContainer.classList.add("hidden_output");
+    error.classList.add("hidden_error");
+    focus.classList.add("hidden_focus");
     body.classList.add("searched_body");
     form.classList.add("search_class_hidden");
     clearAll.classList.add("hidden_clear_class");
@@ -200,24 +191,24 @@ window.addEventListener("load", () => {
     document.title = `${text} - NASA Image Search`;
     isHomePage = false;
 
-    loading.classList.add("hidden_loading");
     loading.classList.remove("show_loading");
-    outputContainer.classList.add("show_output");
     outputContainer.classList.remove("hidden_output");
-    error.classList.add("hidden_error");
     error.classList.remove("show_error");
-    focus.classList.add("hidden_focus");
-
     form.classList.remove("search_class_hidden");
     footer.classList.remove("other_focus");
     searchContainer.classList.remove("other_focus");
     outputContainer.classList.remove("other_focus");
     clearAll.classList.remove("clear_class_search");
+    
     clearAll.classList.add("clear_class_searched");
-
     searchBtn.classList.add("searched_btn_class");
     btnContainer.classList.add("wrapper_btn_class");
     form.classList.add("searched_class");
+    loading.classList.add("hidden_loading");
+    outputContainer.classList.add("show_output");
+    error.classList.add("hidden_error");
+    focus.classList.add("hidden_focus");
+
 
     if (!isHistory) {
       history.pushState(
@@ -235,8 +226,8 @@ window.addEventListener("load", () => {
     focusDesc.textContent = imgDesc;
 
     focus.classList.remove("hidden_focus");
-    focus.classList.add("show_focus");
 
+    focus.classList.add("show_focus");
     footer.classList.add("other_focus");
     searchContainer.classList.add("other_focus");
     outputContainer.classList.add("other_focus");
@@ -248,22 +239,20 @@ window.addEventListener("load", () => {
 
     errorMsg.textContent = errorMessage;
 
-    loading.classList.add("hidden_loading");
     loading.classList.remove("show_loading");
-
     title.classList.remove("show_title");
-    title.classList.add("hidden_title");
-    focus.classList.add("hidden_focus");
     error.classList.remove("hidden_error");
-    error.classList.add("show_error");
-
     outputContainer.classList.remove("show_output");
-    outputContainer.classList.add("hidden_output");
     form.classList.remove("search_class");
     footer.classList.remove("other_focus");
 
     body.classList.add("searched_body");
     form.classList.add("search_class_hidden");
+    title.classList.add("hidden_title");
+    error.classList.add("show_error");
+    loading.classList.add("hidden_loading");
+    focus.classList.add("hidden_focus");
+    outputContainer.classList.add("hidden_output");
 
     errorBtn.addEventListener("click", () => {
       defaultPage();
