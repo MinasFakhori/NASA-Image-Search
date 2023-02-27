@@ -47,7 +47,7 @@ window.addEventListener("load", () => {
     e.preventDefault();
     const searchText = document.querySelector("#search_input").value;
     if (searchText.trim().length < 1) {
-      defaultPage(); // If the search field is empty, go to the home page.
+      defaultPage(false); // If the search field is empty, go to the home page.
     } else {
       const data = encodeURIComponent(searchText);
       getQuery(data, false);
@@ -147,7 +147,7 @@ window.addEventListener("load", () => {
     }
   };
 
-  const defaultPage = () => {
+  const defaultPage = (isHistory) => {
     document.title = "NASA Image Search"; // Change the title of the page.
     isHomePage = true;
 
@@ -171,6 +171,10 @@ window.addEventListener("load", () => {
     clearAll.classList.add("clear_class_hidden");
     form.classList.add("search_class");
     focus.classList.add("hidden_focus");
+
+if (!isHistory) {
+      history.pushState({ state: "index" }, "default", "index.html");
+    }
   };
 
   const loadingPage = () => {
@@ -260,7 +264,7 @@ window.addEventListener("load", () => {
     outputContainer.classList.add("hidden_output");
 
     errorBtn.addEventListener("click", () => {
-      defaultPage();
+      defaultPage(false);
       searchField.value = "";
     });
   };
@@ -268,7 +272,7 @@ window.addEventListener("load", () => {
   window.addEventListener("popstate", (e) => {
     imgInFocus = false; // Reset the image in focus variable.
     if (e.state.state === "index") {
-      defaultPage();
+      defaultPage(true);
       searchField.value = "";
     } else if (e.state.state.startsWith("search")) {
       getQuery(e.state.state.split(":")[1], true);
