@@ -5,6 +5,7 @@
   --theme-colour: #113455;
   --placeholder-colour: #dcdcdc;
   --focus-background: #090e19;
+  --link-colour: #a39f9fd9;
 }
 
 *:focus {
@@ -252,10 +253,35 @@ body {
   display: none;
 }
 
+
 footer {
-  margin-top: 15em;
+  position: relative;
+  width: 95vw;
+  margin-top: 20em;
   text-align: center;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  padding: 1px;
+  background-color: var(--focus-background);
+  border-radius: 10px;
 }
+
+footer ul{
+  text-align: left;
+}
+
+a:link {
+  color: var(--link-colour);
+}
+
+/* visited link */
+a:visited {
+  color: var(--link-colour);
+}
+
+
+
+
 
 /* Media Queries */
 

@@ -126,10 +126,15 @@ window.addEventListener("load", () => {
   };
 
   close.addEventListener("click", () => {
+    imgInFocus = false;
+    
     footer.classList.remove("other_focus");
     searchContainer.classList.remove("other_focus");
     outputContainer.classList.remove("other_focus");
-    imgInFocus = false;
+    focus.classList.remove("show_focus");
+
+    
+    focus.classList.add("hidden_focus");
     focus.classList.add("hidden_focus");
 
     window.scrollTo(0, scrollPosition); // Scroll back to the previous position.
@@ -199,7 +204,8 @@ window.addEventListener("load", () => {
     searchContainer.classList.remove("other_focus");
     outputContainer.classList.remove("other_focus");
     clearAll.classList.remove("clear_class_search");
-    
+    focus.classList.remove("show_focus");
+
     clearAll.classList.add("clear_class_searched");
     searchBtn.classList.add("searched_btn_class");
     btnContainer.classList.add("wrapper_btn_class");
@@ -208,7 +214,6 @@ window.addEventListener("load", () => {
     outputContainer.classList.add("show_output");
     error.classList.add("hidden_error");
     focus.classList.add("hidden_focus");
-
 
     if (!isHistory) {
       history.pushState(
