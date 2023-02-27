@@ -65,7 +65,8 @@ window.addEventListener("load", () => {
 
     const xhr = new XMLHttpRequest(); // Create a new XMLHttpRequest object.
     xhr.addEventListener("load", () => {
-      if (xhr.status === 200) { // 200 means the request is successful.
+      if (xhr.status === 200) {
+        // 200 means the request is successful.
         resultPage(data, text, isHistory);
         const response = JSON.parse(xhr.responseText);
         const items = response.collection.items;
@@ -86,19 +87,33 @@ window.addEventListener("load", () => {
   const displayItems = (items) => {
     for (const item of items) {
       if (item.links && item.links.length > 0) {
-        const imgSrc = item.links[0].href;
-        const imgTitle = item.data[0].title;
-        const imgDesc = item.data[0].description;
+        const imgSrc =
+          item.links[0].href !== null
+            ? item.links[0].href
+            : "../imgs/no_image.png";
+        const imgTitle =
+          item.data[0].title !== null ? item.data[0].title : "No title";
+        const imgAlt =
+          item.links[0].href !== null ? imgTitle : "No image found";
+        const imgDesc =
+          item.data[0].description !== null
+            ? item.data[0].description
+            : "No description";
 
-        createImageElement(imgSrc, imgTitle, imgDesc); 
+        createImageElement(imgSrc, imgAlt, imgTitle, imgDesc);
       }
     }
   };
 
-  const createImageElement = (imgSrc, imgTitle, imgDesc) => {
+  const createImageElement = (imgSrc, imgAlt, imgTitle, imgDesc) => {
     const img = document.createElement("img");
+    img.addEventListener("error", () => {
+      img.src = "../imgs/no_image.png";
+      img.alt = "Image error";
+    });
+
     img.src = imgSrc;
-    img.alt = imgTitle;
+    img.alt = imgAlt;
     img.classList.add("imgs");
     outputContainer.appendChild(img);
 
@@ -121,7 +136,8 @@ window.addEventListener("load", () => {
     window.scrollTo(0, scrollPosition); // Scroll back to the previous position.
   });
 
-  const removeItems = () => { // Remove all the images from the output container.
+  const removeItems = () => {
+    // Remove all the images from the output container.
     while (outputContainer.firstChild) {
       outputContainer.removeChild(outputContainer.firstChild);
     }
@@ -186,7 +202,7 @@ window.addEventListener("load", () => {
 
     if (!isHistory) {
       history.pushState(
-        { state: `search:${data}` }, // Make the state an object with a prefix to know what type of state it is and the data. 
+        { state: `search:${data}` }, // Make the state an object with a prefix to know what type of state it is and the data.
         text, // The title of the page, most browsers don't use this yet but it's for future proofing.
         `search+${data}.html`
       );
@@ -235,11 +251,10 @@ window.addEventListener("load", () => {
     if (e.state.state === "index") {
       defaultPage();
       searchField.value = "";
-    } else if (e.state.state.startsWith("search")) { 
-      getQuery(e.state.state.split(":")[1], true); 
+    } else if (e.state.state.startsWith("search")) {
+      getQuery(e.state.state.split(":")[1], true);
       // Using split I can get all the data after the colon. 1 to say second part of the string.
       searchField.value = decodeURIComponent(e.state.state.split(":")[1]);
-      // searchField.setAttribute('value', e.state.state.split(":")[1]);
     }
   });
 

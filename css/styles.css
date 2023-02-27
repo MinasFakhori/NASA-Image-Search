@@ -233,7 +233,10 @@ display: none;
     display: none;
   }
   
-
+footer{
+  margin-top: 15em;
+  text-align: center;
+}
 
 /* Media Queries */
 
