@@ -18,7 +18,7 @@
   <body>
     <main>
       <header>
-        <h1 id="title">NASA Image Search</h1>
+        <h1 id="title" class="show_title">NASA Image Search</h1>
       </header>
       <div id="search_container">
         <form id="search_form" class="search_class">
@@ -42,23 +42,19 @@
         </form>
       </div>
 
-      <div id="loading">
+      <div id="loading" class="hidden_loading">
         <img src="imgs/loading.gif" alt="loading" />
       </div>
 
-      <div id="output_container"></div>
+      <div id="output_container" class="hidden_output"></div>
 
-      <div id="error">
-        <img
-          id="error_img"
-          src="imgs/error_puppy.png"
-          alt="error puppy image"
-        />
-        <p id="error_msg"></p>
+      <div id="error" class="hidden_error">
+        <img src="imgs/error_puppy.png" alt="error puppy image" />
+        <p></p>
         <button id="error_btn">Try again</button>
       </div>
 
-      <div id="focus">
+      <div id="focus" class="hidden_focus">
         <img id="close" src="imgs/close.png" alt="focus image" />
         <h2 id="focus_title">Loading...</h2>
         <img id="focus_img" src="imgs/loading.gif" alt="focus image" />
