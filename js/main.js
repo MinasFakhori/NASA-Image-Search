@@ -137,6 +137,7 @@ window.addEventListener("load", () => {
 
   close.addEventListener("click", () => {
     imgInFocus = false;
+    focusImg.src = "imgs/loading.gif"; 
 
     footer.classList.remove("other_focus");
     searchContainer.classList.remove("other_focus");
