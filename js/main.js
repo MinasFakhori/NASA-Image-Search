@@ -107,7 +107,7 @@ window.addEventListener("load", () => {
             : "No description";
         const imgDate =
           item.data[0].date_created !== null
-            ? `Data created ${item.data[0].date_created}`
+            ? `Data created : ${item.data[0].date_created}`
             : "No date";
 
         createImageElement(imgSrc, imgAlt, imgTitle, imgDesc, imgDate);
@@ -250,6 +250,9 @@ window.addEventListener("load", () => {
     footer.classList.add("other_focus");
     searchContainer.classList.add("other_focus");
     outputContainer.classList.add("other_focus");
+
+    outputContainer.scrollTo(0, scrollPosition); // Absolute positioning makes the scroll position lost, so we need to scroll back to the previous position.
+    window.scrollTo(0, 0); // Scroll to the top of the page.
   };
 
   const errorPage = (errorMessage) => {

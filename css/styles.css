@@ -222,18 +222,15 @@ body {
 }
 
 .other_focus {
-  position: fixed;
-  transition: transform 0.5s ease-in-out;
+  position: absolute;
   filter: blur(5px);
+  overflow: hidden;
 }
 
-.other_focus p {
+.other_focus p , .other_focus ul , .other_focus form{
   display: none;
 }
 
-.other_focus form {
-  display: none;
-}
 
 #close {
   cursor: pointer;
@@ -328,6 +325,10 @@ a:visited {
 }
 
 @media screen and (min-width: 1224px) {
+ #search_input {
+    width: 600px;
+    height: 25px;
+  }
   .searched_class {
     flex-direction: row;
     margin-top: 0;
@@ -365,19 +366,20 @@ a:visited {
   .clear_class_search {
     position: absolute;
     display: flex;
-    margin-top: -2em;
-    margin-left: 22%;
-    height: 1em;
+    margin-top: -31px;
+    margin-left: 368px;
+    height: 16px;
   }
 
   .clear_class_searched {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 0.9em;
-    width: 0.9em;
+    padding: 8px;
+    height: 10px;
+    width: 10px;
     margin-right: 1em;
-    margin-top: 0.8em;
+    margin-top: 8px;
     cursor: pointer;
   }
 
