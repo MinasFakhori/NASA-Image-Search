@@ -16,8 +16,9 @@ window.addEventListener("load", () => {
   const focusTitle = document.querySelector("#focus_title");
   const focusImg = document.querySelector("#focus_img");
   const focusDesc = document.querySelector("#focus_desc");
-  const clearAll = document.querySelector("#clear_all");
   const focusDate = document.querySelector("#focus_date");
+  const clearAll = document.querySelector("#clear_all");
+
 
   let scrollPosition; // Variable to store scroll position.
   let imgInFocus = false; // Boolean to check if image is in focus, if it is then don't allow onClick on other images.
@@ -242,7 +243,6 @@ window.addEventListener("load", () => {
     focusImg.alt = imgTitle;
     focusDesc.textContent = imgDesc;
     focusDate.textContent = imgDate;
-
 
     focus.classList.remove("hidden_focus");
 
