@@ -295,6 +295,6 @@ window.addEventListener("load", () => {
     }
   });
 
-  // This replaces the default state with a custom state so I can use it in the popstate.
+  // This replaces the default state so when I can make the state index in other parts of the code, and it goes to the default state.
   history.replaceState({ state: "index" }, "default", "index.html");
 });
