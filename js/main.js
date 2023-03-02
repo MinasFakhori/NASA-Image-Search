@@ -17,13 +17,16 @@ window.addEventListener("load", () => {
   const focusImg = document.querySelector("#focus_img");
   const focusDesc = document.querySelector("#focus_desc");
   const clearAll = document.querySelector("#clear_all");
+  const focusDate = document.querySelector("#focus_date");
 
   let scrollPosition; // Variable to store scroll position.
   let imgInFocus = false; // Boolean to check if image is in focus, if it is then don't allow onClick on other images.
   let isHomePage = true; // Boolean to check if user is on home page or not, so the clear button position can be changed accordingly.
 
   searchField.addEventListener("input", (e) => {
-    let className = isHomePage ? "clear_class_search" : "clear_class_searched";
+    const className = isHomePage
+      ? "clear_class_search"
+      : "clear_class_searched";
 
     // If the search field is not empty, show the clear button.
     if (e.target.value.length > 0) {
@@ -47,7 +50,9 @@ window.addEventListener("load", () => {
     e.preventDefault();
     const searchText = document.querySelector("#search_input").value;
     if (searchText.trim().length < 1) {
-      defaultPage(false); // If the search field is empty, go to the home page.
+      if (!isHomePage) {
+        defaultPage(false); // If the search field is empty, go to the home page.
+      }
     } else {
       const data = encodeURIComponent(searchText);
       getQuery(data, false);
@@ -99,13 +104,17 @@ window.addEventListener("load", () => {
           item.data[0].description !== null
             ? item.data[0].description
             : "No description";
+        const imgDate =
+          item.data[0].date_created !== null
+            ? `Data created ${item.data[0].date_created}`
+            : "No date";
 
-        createImageElement(imgSrc, imgAlt, imgTitle, imgDesc);
+        createImageElement(imgSrc, imgAlt, imgTitle, imgDesc, imgDate);
       }
     }
   };
 
-  const createImageElement = (imgSrc, imgAlt, imgTitle, imgDesc) => {
+  const createImageElement = (imgSrc, imgAlt, imgTitle, imgDesc, imgDate) => {
     const img = document.createElement("img");
     img.addEventListener("error", () => {
       img.src = "../imgs/no_image.png";
@@ -120,20 +129,19 @@ window.addEventListener("load", () => {
       if (!imgInFocus) {
         imgInFocus = true;
         scrollPosition = window.pageYOffset;
-        focusPage(imgTitle, imgSrc, imgDesc);
+        focusPage(imgTitle, imgSrc, imgDesc , imgDate);
       }
     });
   };
 
   close.addEventListener("click", () => {
     imgInFocus = false;
-    
+
     footer.classList.remove("other_focus");
     searchContainer.classList.remove("other_focus");
     outputContainer.classList.remove("other_focus");
     focus.classList.remove("show_focus");
 
-    
     focus.classList.add("hidden_focus");
     focus.classList.add("hidden_focus");
 
@@ -172,7 +180,7 @@ window.addEventListener("load", () => {
     form.classList.add("search_class");
     focus.classList.add("hidden_focus");
 
-if (!isHistory) {
+    if (!isHistory) {
       history.pushState({ state: "index" }, "default", "index.html");
     }
   };
@@ -228,11 +236,13 @@ if (!isHistory) {
     }
   };
 
-  const focusPage = (imgTitle, imgSrc, imgDesc) => {
+  const focusPage = (imgTitle, imgSrc, imgDesc, imgDate) => {
     focusTitle.textContent = imgTitle;
     focusImg.src = imgSrc;
     focusImg.alt = imgTitle;
     focusDesc.textContent = imgDesc;
+    focusDate.textContent = imgDate;
+
 
     focus.classList.remove("hidden_focus");
 
