@@ -19,7 +19,6 @@ window.addEventListener("load", () => {
   const focusDate = document.querySelector("#focus_date");
   const clearAll = document.querySelector("#clear_all");
 
-
   let scrollPosition; // Variable to store scroll position.
   let imgInFocus = false; // Boolean to check if image is in focus, if it is then don't allow onClick on other images.
   let isHomePage = true; // Boolean to check if user is on home page or not, so the clear button position can be changed accordingly.
@@ -86,7 +85,7 @@ window.addEventListener("load", () => {
       }
     });
 
-    xhr.open("GET", `https://images-api.nasa.gov/search?q=${data}`, true); // Open a new connection, using the GET request on the URL endpoint.
+    xhr.open("GET", `https://images-api.nasa.gov/search?q=${data}`, true); // Open a new connection, using the GET request.
     xhr.send();
   };
 
@@ -130,25 +129,10 @@ window.addEventListener("load", () => {
       if (!imgInFocus) {
         imgInFocus = true;
         scrollPosition = window.pageYOffset;
-        focusPage(imgTitle, imgSrc, imgDesc , imgDate);
+        focusPage(imgTitle, imgSrc, imgDesc, imgDate);
       }
     });
   };
-
-  close.addEventListener("click", () => {
-    imgInFocus = false;
-    focusImg.src = "imgs/loading.gif"; 
-
-    footer.classList.remove("other_focus");
-    searchContainer.classList.remove("other_focus");
-    outputContainer.classList.remove("other_focus");
-    focus.classList.remove("show_focus");
-
-    focus.classList.add("hidden_focus");
-    focus.classList.add("hidden_focus");
-
-    window.scrollTo(0, scrollPosition); // Scroll back to the previous position.
-  });
 
   const removeItems = () => {
     // Remove all the images from the output container.
@@ -254,6 +238,25 @@ window.addEventListener("load", () => {
 
     outputContainer.scrollTo(0, scrollPosition); // Absolute positioning makes the scroll position lost, so we need to scroll back to the previous position.
     window.scrollTo(0, 0); // Scroll to the top of the page.
+
+    close.addEventListener("click", () => {
+      notFocusPage();
+    });
+  };
+
+  const notFocusPage = () => {
+    imgInFocus = false;
+    focusImg.src = "imgs/loading.gif";
+
+    footer.classList.remove("other_focus");
+    searchContainer.classList.remove("other_focus");
+    outputContainer.classList.remove("other_focus");
+    focus.classList.remove("show_focus");
+
+    focus.classList.add("hidden_focus");
+    focus.classList.add("hidden_focus");
+
+    window.scrollTo(0, scrollPosition); // Scroll back to the previous position.
   };
 
   const errorPage = (errorMessage) => {
