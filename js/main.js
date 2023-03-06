@@ -119,6 +119,9 @@ window.addEventListener("load", () => {
     img.addEventListener("error", () => {
       img.src = "../imgs/no_image.png";
       img.alt = "Image error";
+
+      imgSrc = img.src;
+      imgAlt = img.alt;
     });
 
     img.src = imgSrc;
