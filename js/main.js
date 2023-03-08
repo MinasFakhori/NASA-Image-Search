@@ -24,9 +24,7 @@ window.addEventListener("load", () => {
   let isHomePage = true; // Boolean to check if user is on home page or not, so the clear button position can be changed accordingly.
 
   searchField.addEventListener("input", (e) => {
-    const className = isHomePage
-      ? "clear_class_search"
-      : "clear_class_searched";
+    const className = isHomePage ? "clear_class_search" : "clear_class_searched";
 
     // If the search field is not empty, show the clear button.
     if (e.target.value.length > 0) {
@@ -92,22 +90,11 @@ window.addEventListener("load", () => {
   const displayItems = (items) => {
     for (const item of items) {
       if (item.links && item.links.length > 0) {
-        const imgSrc =
-          item.links[0].href !== null
-            ? item.links[0].href
-            : "../imgs/no_image.png";
-        const imgTitle =
-          item.data[0].title !== null ? item.data[0].title : "No title";
-        const imgAlt =
-          item.links[0].href !== null ? imgTitle : "No image found";
-        const imgDesc =
-          item.data[0].description !== null
-            ? item.data[0].description
-            : "No description";
-        const imgDate =
-          item.data[0].date_created !== null
-            ? `Data created : ${item.data[0].date_created}`
-            : "No date";
+        const imgSrc = item.links[0].href !== null ? item.links[0].href : "../imgs/no_image.png";
+        const imgTitle = item.data[0].title !== null ? item.data[0].title : "No title";
+        const imgAlt = item.links[0].href !== null ? imgTitle : "No image found";
+        const imgDesc = item.data[0].description !== null ? item.data[0].description : "No description";
+        const imgDate = item.data[0].date_created !== null ? `Data created : ${item.data[0].date_created}` : "No date";
 
         createImageElement(imgSrc, imgAlt, imgTitle, imgDesc, imgDate);
       }
