@@ -90,7 +90,7 @@ window.addEventListener("load", () => {
   const displayItems = (items) => {
     for (const item of items) {
       if (item.links && item.links.length > 0) {
-        const imgSrc = item.links[0].href !== null ? item.links[0].href : "imgs/no_image.png";
+        const imgSrc = item.links[0].href !== null ? item.links[0].href : "./imgs/no_image.png";
         const imgTitle = item.data[0].title !== null ? item.data[0].title : "No title";
         const imgAlt = item.links[0].href !== null ? imgTitle : "No image found";
         const imgDesc = item.data[0].description !== null ? item.data[0].description : "No description";
@@ -104,7 +104,7 @@ window.addEventListener("load", () => {
   const createImageElement = (imgSrc, imgAlt, imgTitle, imgDesc, imgDate) => {
     const img = document.createElement("img");
     img.addEventListener("error", () => {
-      img.src = "imgs/no_image.png";
+      img.src = "./imgs/no_image.png";
       img.alt = "Image error";
 
       imgSrc = img.src;
